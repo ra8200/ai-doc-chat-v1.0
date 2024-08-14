@@ -103,7 +103,6 @@ export default function Home() {
                       aria-hidden="true"
                       className="absolute left-1 top-1 w-5 h-5 text-indigo-600"
                     />
-                    {feature.name}
                   </dt>
 
                   <dd>{feature.description}</dd>

@@ -1,6 +1,6 @@
 import Documents from "@/components/Documents"
 
-export const dynamic = "forec-dynamic"
+export const dynamic = "force-dynamic"
 
 function Dashboard() {
   return (
