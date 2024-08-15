@@ -9,7 +9,7 @@ function Dashboard() {
         My Documents
       </h1>
 
-      <Documents/>
+      <Documents />
     </div>
   )
 }
