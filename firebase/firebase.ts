@@ -3,7 +3,7 @@ import { getFirestore } from "firebase/firestore";
 import { getStorage } from "firebase/storage";
 
 const firebaseConfig = {
-    apiKey: "AIzaSyDRjJztwUE89_kj2aq7QtpcK5wNgMYAMAA",
+    apiKey:process.env.FIREBASE_API_KEY,
     authDomain: "ai-doc-chat.firebaseapp.com",
     projectId: "ai-doc-chat",
     storageBucket: "ai-doc-chat.appspot.com",
