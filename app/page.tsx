@@ -12,8 +12,8 @@ import Image from "next/image";
 
 const features = [
   {
-    name: "Store your PDF Documents",
-    description:"Keep all your important {DF files securely stored and easily accessible anytime, anywhere.",
+    name: "Store your Documents",
+    description:"Keep all your important files securely stored and easily accessible anytime, anywhere.",
     icon: GlobeIcon,
   },
   {
@@ -27,8 +27,8 @@ const features = [
     icon: BrainCogIcon,
   },
   {
-    name: "Interactive PDF Viewer",
-    description: "Engage with your PDFs like never before using our intuitive and interactive viewer.",
+    name: "Interactive Document Viewer",
+    description: "Engage with your documentss like never before using our intuitive and interactive viewer.",
     icon: EyeIcon,
   },
   {
@@ -38,7 +38,7 @@ const features = [
   },
   {
     name: "Responsive Across Devices",
-    description: "Access and chat with your PDFs seamlessly on any device, whether it's a desktop, tablet, or smartphone.",
+    description: "Access and chat with your documentss seamlessly on any device, whether it's a desktop, tablet, or smartphone.",
     icon: MonitorSmartphone,
   }
 ]
@@ -54,17 +54,17 @@ export default function Home() {
             </h2>
 
             <p className="mt-2 text-3xl font-bold tracking-tight text-gray-700 sm:text-6xl">
-              Transform Your PDFs into Interactive Conversations
+              Transform Your documents into Interactive Conversations
             </p>
 
             <p className="mt-6 text-lg leading-8 text-gray-600">
               Introducting{" "}
-              <span className="text-indigo-600 font-bold">Chat with PDF.</span>
+              <span className="text-indigo-600 font-bold">Chat with your Docs.</span>
               <br />
               <br /> Upload your document, and our chatbot will answers
               questions, summarize conent, and answerall your Questions. Ideal for
               everyone, <span className="text-indigo-600">
-                Chat with PDF
+                Chat with your Docs
               </span>{" "}
               turns static documents into {" "}
               <span className="font-bold">dynamic conversations</span>,
