@@ -60,7 +60,7 @@ export async function generateDocs(docId: string) {
     const splitter = new RecursiveCharacterTextSplitter();
 
     const splitDocs = await splitter.splitDocuments(doc);
-    console.log(`--- Split inot ${splitDocs.length} parts ---`);
+    console.log(`--- Split into ${splitDocs.length} parts ---`);
 
     return splitDocs;
 }
