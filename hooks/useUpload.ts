@@ -3,11 +3,10 @@
 import { generateEmbeddings } from "@/actions/generateEmbeddings";
 import { db, storage } from "@/firebase/firebase";
 import { useUser } from "@clerk/nextjs";
-import { create } from "domain";
 import { doc, setDoc } from "firebase/firestore";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import { useRouter } from "next/navigation";
-import { useState, useEffect } from "react"
+import { useState } from "react"
 import { v4 as uuid4 } from "uuid"
 
 export enum StatusText {
@@ -31,7 +30,7 @@ function useUpload() {
 
         // TODO: FREE/PRO limitiations...
 
-        const fileIdToUploadTo = uuid4(); //example: 1234e-5678-90ab-cdef-ghij-klmno
+        const fileIdToUploadTo = uuid4();
 
         const storageRef = ref(
             storage, 
@@ -51,14 +50,14 @@ function useUpload() {
         }, async () => {
             setStatus(StatusText.UPLOADED);
             
-            const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
+            const downloadUrl = await getDownloadURL(uploadTask.snapshot.ref);
 
             setStatus(StatusText.SAVING);
             await setDoc(doc(db, "users", user.id, "files", fileIdToUploadTo), {
                 name: file.name,
                 size: file.size,
                 type: file.type,
-                downloadURL: downloadURL,
+                downloadUrl: downloadUrl,
                 ref: uploadTask.snapshot.ref.fullPath,
                 createdAt: new Date(),
             });

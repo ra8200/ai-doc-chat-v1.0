@@ -23,4 +23,4 @@ function PlaceholderDocuments() {
   )
 }
 
-export default PlaceholderDocuments
+export default PlaceholderDocuments;

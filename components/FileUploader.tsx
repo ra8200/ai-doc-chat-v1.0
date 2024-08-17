@@ -19,13 +19,11 @@ function FileUploader() {
     useEffect(() => {
         if (fileId) {
             router.push(`/dashboard/files/${fileId}`);
-        } 
-        
+        }    
     }, [fileId, router])
 
-    const onDrop = useCallback(async(acceptedFiles: File[]) => {
+    const onDrop = useCallback(async (acceptedFiles: File[]) => {
         // Do something with the files
-
         const file = acceptedFiles[0]
         if (file) {
             await handleUpload(file)
@@ -54,14 +52,8 @@ function FileUploader() {
             maxFiles: 1,
             accept: {
                 "application/pdf": [".pdf"],
-                "application/vnd.openxmlformats-officedocument.wordprocessingml.document": [".docx"],
-                "application/msword": [".doc"],
-                "application/vnd.ms-excel": [".xls"],
-                "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet": [".xlsx"],
-                "text/plain": [".txt"],
-                "application/vnd.ms-csv": [".csv"],
-            }
-        })
+            },
+        });
     
     const uploadInProgress = progress != null && progress >= 0 && progress <= 100;
 
@@ -118,4 +110,4 @@ function FileUploader() {
     );
 }
 
-export default FileUploader
+export default FileUploader;

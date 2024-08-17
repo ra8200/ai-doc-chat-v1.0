@@ -1,6 +1,5 @@
 import { ChatOpenAI } from "@langchain/openai"
 import { PDFLoader } from "@langchain/community/document_loaders/fs/pdf";
-import { DocxLoader } from "@langchain/community/document_loaders/fs/docx";
 import { RecursiveCharacterTextSplitter } from "langchain/text_splitter";
 import { OpenAIEmbeddings } from "@langchain/openai";
 import { createStuffDocumentsChain } from "langchain/chains/combine_documents";
@@ -14,6 +13,7 @@ import { PineconeConflictError } from "@pinecone-database/pinecone/dist/errors";
 import { Index, RecordMetadata } from "@pinecone-database/pinecone";
 import { adminDb } from "@/firebase/firebaseAdmin";
 import { auth } from "@clerk/nextjs/server"
+// import { DocxLoader } from "@langchain/community/document_loaders/fs/docx";
 
 const model = new ChatOpenAI({
     apiKey: process.env.OPENAI_API_KEY,
@@ -117,5 +117,5 @@ export async function generateEmbeddingsInPineconeVectorStore(docId: string) {
         );
 
         return pineconeVectorStore;
-    }
+    };
 }
