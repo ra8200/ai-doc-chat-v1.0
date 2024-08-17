@@ -6,7 +6,7 @@ function Dashboard() {
   return (
     <div className="h-full max-w-7xl mx-auto">
       <h1 className="text-3xl bg-gray-100 text-indigo-600 font-semibold">
-        My Documents
+        My PDFs
       </h1>
 
       <Documents />

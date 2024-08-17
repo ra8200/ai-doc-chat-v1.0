@@ -8,7 +8,7 @@ const Header = () => {
 
     <div className="flex justify-between bg-white shadow-sm p-5 border-b">
         <Link href="/dashboard" className="text-2xl">
-            Chat with your <span className="text-indigo-600">Docs</span>
+            Chat with your <span className="text-indigo-600">PDF</span>
         </Link>
 
         <SignedIn>
