@@ -3,13 +3,13 @@
 import { FormEvent, useEffect, useRef, useState, useTransition } from "react";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
-// import { askQuestion, Message } from "@/actions/askQuestion";
 import { Loader2Icon } from "lucide-react";
 // import ChatMessage from "./ChatMessage";
 import { useCollection } from "react-firebase-hooks/firestore";
 import { useUser } from "@clerk/nextjs"; 
-import { collection, orderBy, query } from "firebase/firestore";
+import { collection, doc, orderBy, query } from "firebase/firestore";
 import { db } from "@/firebase/firebase"
+import { askQuestion } from "@/actions/askQuestion";
 
 export type Message = {
     id?: string;
@@ -37,6 +37,29 @@ function Chat({ id }: { id: string }) {
         if (!snapshot) return;
 
         console.log("Updated snapshot", snapshot.docs)
+
+        // get seocnd to last message to check if the AI is thinking
+        const lastMessage = messages.pop();
+
+        if (lastMessage?.role === "ai" && lastMessage.message === "Thinking...") {
+            // return as this is a dummy placeholder message
+            return
+        }
+
+        const newMessages = snapshot.docs.map(doc => {
+            const { role, message, createdAt } = doc.data();
+
+            return {
+                id: doc.id,
+                role,
+                message,
+                createdAt: createdAt.toDate(),
+            };
+        })
+
+        setMessages(newMessages);
+
+        // Ignore messages dependency warning here... we don't want an infinite loop
     }, [snapshot]);
 
     const handleSubmit = async (e: FormEvent) => {
@@ -64,7 +87,7 @@ function Chat({ id }: { id: string }) {
         startTransition( async () => {
             const { success, message } = await askQuestion(id, q);
 
-            if(!success) {
+            if (!success) {
                 // toast({
                 //     variant: "destructive",
                 //     title: "Error",
@@ -88,9 +111,23 @@ function Chat({ id }: { id: string }) {
         <div className="flex flex-col h-full overflow-scroll">
             {/* Chat content */}
             <div className="flex-1 w-full ">
+                {/* chat messages... */}
+                {loading ? (
+                    <div className="flex items-center justify-center">
+                        <Loader2Icon className="animate-spin h-20 w-20 text-indigo-600 mt-20" />
+                    </div>
+                ): (
+                    <div>
+                        {messages.map((message) => (
+                            <div key={message.id}>
+                                <p>{message.message}</p>
+                            </div>
+                        ))} 
+                    </div>   
+                )}
                 
-
             </div>
+
             <form
                 onSubmit={handleSubmit}
                 className="flex sticky bottom-0 space-x-2 p-5 bg-indigo-600/75"
