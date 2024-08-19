@@ -31,6 +31,7 @@ function Chat({ id }: { id: string }) {
     const [ snapshot, loading ] = useCollection(
         user && query(collection(db, "users", user?.id, "files", id, "chat"), orderBy("createdAt", "asc"))
     );
+    
     useEffect(() => {
         bottomOfChatRef.current?.scrollIntoView({
             behavior: "smooth",
