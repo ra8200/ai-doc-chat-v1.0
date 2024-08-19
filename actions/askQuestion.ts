@@ -9,6 +9,7 @@ const FREE_LIMIT = 2;
 const PRO_LIMIT = 20;
 
 export async function askQuestion( id: string, question: string) {
+    console.log(`askQuestion triggered with id: ${id}, question: ${question}`);
     auth().protect();
     const { userId } = await auth();
 
@@ -17,7 +18,7 @@ export async function askQuestion( id: string, question: string) {
         .doc(userId!)
         .collection("files")
         .doc(id)
-        .collection("chats");
+        .collection("chat");
 
     // check how many user messages are in the chat
     const chatSnapshot = await chatRef.get();
@@ -40,6 +41,7 @@ export async function askQuestion( id: string, question: string) {
 
     //Generate AI response
     const reply = await generateLangchainCompletion(id, question);
+    console.log(`Generated AI reply: ${reply}`);
 
     const aiMessage: Message = {
         role: "ai",
