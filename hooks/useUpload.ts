@@ -16,7 +16,7 @@ export enum StatusText {
     GENERATING = "Generating AI Embedding, This will take a few seconds...",
 }
 
-    export type Status = StatusText[keyof StatusText]
+export type Status = StatusText[keyof StatusText]
 
 function useUpload() {
     const [progress, setProgress] = useState<number | null>(null);
@@ -39,35 +39,38 @@ function useUpload() {
 
         const uploadTask = uploadBytesResumable(storageRef, file);
 
-        uploadTask.on("state_changed", (snapshot) => {
+        uploadTask.on(
+            "state_changed", 
+            (snapshot) => {
             const percent = Math.round(
                 (snapshot.bytesTransferred / snapshot.totalBytes) * 100
             );
-            setStatus(StatusText.UPLOADING);
-            setProgress(percent);
-        }, (error) => {
-            console.error("Error uploading file", error);
-        }, async () => {
-            setStatus(StatusText.UPLOADED);
-            
-            const downloadUrl = await getDownloadURL(uploadTask.snapshot.ref);
+                setStatus(StatusText.UPLOADING);
+                setProgress(percent);
+            }, (error) => {
+                console.error("Error uploading file", error);
+            }, async () => {
+                setStatus(StatusText.UPLOADED);
+                
+                const downloadUrl = await getDownloadURL(uploadTask.snapshot.ref);
 
-            setStatus(StatusText.SAVING);
-            await setDoc(doc(db, "users", user.id, "files", fileIdToUploadTo), {
-                name: file.name,
-                size: file.size,
-                type: file.type,
-                downloadUrl: downloadUrl,
-                ref: uploadTask.snapshot.ref.fullPath,
-                createdAt: new Date(),
-            });
+                setStatus(StatusText.SAVING);
+                await setDoc(doc(db, "users", user.id, "files", fileIdToUploadTo), {
+                    name: file.name,
+                    size: file.size,
+                    type: file.type,
+                    downloadUrl: downloadUrl,
+                    ref: uploadTask.snapshot.ref.fullPath,
+                    createdAt: new Date(),
+                });
 
-            setStatus(StatusText.GENERATING);
-            // Generate AI Embedding
-            await generateEmbeddings(fileIdToUploadTo);
+                setStatus(StatusText.GENERATING);
+                // Generate AI Embedding
+                await generateEmbeddings(fileIdToUploadTo);
 
-            setFileId(fileIdToUploadTo);
-        });
+                setFileId(fileIdToUploadTo);
+            }
+        );
     };
 
     return { progress, fileId, status, handleUpload };

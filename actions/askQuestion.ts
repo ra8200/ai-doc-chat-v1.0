@@ -5,8 +5,8 @@ import { auth } from "@clerk/nextjs/server";
 import { generateLangchainCompletion } from "@/lib/ai/langchain"
 import { Message } from "@/components/Chat";
 
-const FREE_LIMIT = 3;
-const PRO_LIMIT = 100;
+const FREE_LIMIT = 2;
+const PRO_LIMIT = 20;
 
 export async function askQuestion( id: string, question: string) {
     auth().protect();
@@ -26,6 +26,9 @@ export async function askQuestion( id: string, question: string) {
     );
 
     // limit pro and free plans
+    // check how many user messages are in the chat
+    // Check membership limits for messages in a document
+    // check if user is on PRO plan and has asked more than 100 questions
 
     const userMessage: Message = {
         role: "human",
@@ -48,5 +51,3 @@ export async function askQuestion( id: string, question: string) {
 
     return { success: true, message: null };
 }
-
-
