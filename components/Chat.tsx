@@ -62,15 +62,16 @@ function Chat({ id }: { id: string }) {
 
         setMessages(newMessages);
         // Ignore messages dependency warning here
-    }, [snapshot, loading, messages]);
+    }, [snapshot]);
 
     const handleSubmit = async (e: FormEvent) => {
         e.preventDefault();
+
+        console.log("handleSubmit triggered");
+        
         const q = input;
         // if(!q) return;
-
         setInput("");
-
         // Optimistic UI update
         setMessages((prev) => [
             ...prev,
@@ -130,7 +131,7 @@ function Chat({ id }: { id: string }) {
                                     role: "ai",
                                     message: "Ask me anything about the document!",
                                     createdAt: new Date(),
-                                    }}
+                                }}
                             />
                         )}
 

@@ -7,7 +7,7 @@ import { ChatPromptTemplate } from "@langchain/core/prompts";
 import { createRetrievalChain } from "langchain/chains/retrieval";
 import { createHistoryAwareRetriever } from "langchain/chains/history_aware_retriever";
 import { HumanMessage, AIMessage } from "@langchain/core/messages";
-import pineconeClient from "../pinecone";
+import pineconeClient from "./pinecone";
 import { PineconeStore } from "@langchain/pinecone";
 import { PineconeConflictError } from "@pinecone-database/pinecone/dist/errors";
 import { Index, RecordMetadata } from "@pinecone-database/pinecone";
@@ -30,7 +30,7 @@ async function fetchMessagesFromDB(docId: string) {
 
     console.log("--- Fetching chat history from the firestore database... ---");
     // Get the last 10 messages from the chat history
-    const LIMIT = 10;
+    // const LIMIT = 10;
     const chats = await adminDb
         .collection("users")
         .doc(userId)
@@ -38,7 +38,7 @@ async function fetchMessagesFromDB(docId: string) {
         .doc(docId)
         .collection("chat")
         .orderBy("createdAt", "desc")
-        .limit(LIMIT)
+        // .limit(LIMIT)
         .get();
 
     const chatHistory = chats.docs.map((doc) =>
@@ -47,7 +47,7 @@ async function fetchMessagesFromDB(docId: string) {
         : new AIMessage(doc.data().message)
     );
 
-    console.log("--- fetch last ${chatHistory.length} messages successfully ---");
+    console.log(`--- fetch last ${chatHistory.length} messages successfully ---`);
     console.log(chatHistory.map((msg) => msg.content.toString()));
 
     return chatHistory;
@@ -122,9 +122,7 @@ export async function generateEmbeddingsInPineconeVectorStore(docId: string) {
     const namespaceAlreadyExists = await namespaceExists(index, docId);
 
     if (namespaceAlreadyExists) {
-        console.log (
-            `--- Namespace ${docId} already exists, reusing existing embeddings... ---`
-        );
+        console.log (`--- Namespace ${docId} already exists, reusing existing embeddings... ---`);
 
         pineconeVectorStore = await PineconeStore.fromExistingIndex(embeddings, {
             pineconeIndex: index,

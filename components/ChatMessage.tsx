@@ -7,6 +7,9 @@ import Markdown from "react-markdown";
 import { Message } from "./Chat";
 
 function ChatMessage({ message }: { message: Message }) {
+
+  console.log("Rendering message:", message);
+
   const isHuman = message.role === "human";
   const { user } = useUser();
 

@@ -2,7 +2,7 @@
 
 import { adminDb } from "@/firebase/firebaseAdmin";
 import { auth } from "@clerk/nextjs/server";
-import { generateLangchainCompletion } from "@/lib/ai/langchain"
+import { generateLangchainCompletion } from "@/lib/langchain"
 import { Message } from "@/components/Chat";
 
 const FREE_LIMIT = 2;
@@ -39,7 +39,7 @@ export async function askQuestion( id: string, question: string) {
     await chatRef.add(userMessage);
 
     //Generate AI response
-    const reply = await generateLangchainCompletion(id,question);
+    const reply = await generateLangchainCompletion(id, question);
 
     const aiMessage: Message = {
         role: "ai",
