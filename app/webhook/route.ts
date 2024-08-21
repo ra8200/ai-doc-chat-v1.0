@@ -14,7 +14,10 @@ export async function POST(req: NextRequest) {
     }
 
     if (!process.env.STRIPE_WEBHOOK_SECRET) {
-        return new NextResponse("Stripe Webhook secret is not sset", { status: 400 });
+        console.log("⚠️ Stripe webhook secret is not set.");
+        return new NextResponse("Stripe webhook secret is not set", { 
+            status: 400, 
+        });
     }
 
     let event: Stripe.Event;
@@ -24,7 +27,7 @@ export async function POST(req: NextRequest) {
             body,
             signature,
             process.env.STRIPE_WEBHOOK_SECRET
-        )
+        );
     } catch (err) {
         console.error(`Webhook Error: ${err}`);
         return new NextResponse(`Webhook Error: ${err}`, { status: 400 });
@@ -40,7 +43,7 @@ export async function POST(req: NextRequest) {
         if (!userDoc.empty) {
             return userDoc.docs[0];
         }
-    }
+    };
 
     switch (event.type) {
         case "checkout.session.completed":
@@ -50,20 +53,20 @@ export async function POST(req: NextRequest) {
 
             // Get user edtails
             const userDetails = await getUserDetails(customerId);
-            if (!userDetails) {
+            if (!userDetails?.id) {
                 return new NextResponse("User not found", { status: 404 });
             }
 
             // Update user's subscription status
             await adminDb.collection("users").doc(userDetails?.id).update({
-                hasActiveSubscription: true,
+                hasActiveMembership: true,
             });
 
             break;
         }
 
         case "customer.subscription.deleted":
-        case "subscription_schedule.canceled":{
+        case "subscription_schedule.canceled": {
             const subscription = event.data.object as Stripe.Subscription;
             const customerId = subscription.customer as string;
 
@@ -73,7 +76,7 @@ export async function POST(req: NextRequest) {
             }
 
             await adminDb.collection("users").doc(userDetails?.id).update({
-                hasActiveSubscription: false,
+                hasActiveMembership: false,
             });
 
             break;
