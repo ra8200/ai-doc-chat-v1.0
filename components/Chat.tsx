@@ -63,7 +63,7 @@ function Chat({ id }: { id: string }) {
 
         setMessages(newMessages);
         // Ignore messages dependency warning here
-    }, [snapshot]);
+    }, [snapshot, messages]);
 
     const handleSubmit = async (e: FormEvent) => {
         e.preventDefault();

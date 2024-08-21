@@ -64,7 +64,6 @@ export async function POST(req: NextRequest) {
 
             break;
         }
-
         case "customer.subscription.deleted":
         case "subscription_schedule.canceled": {
             const subscription = event.data.object as Stripe.Subscription;
@@ -81,10 +80,10 @@ export async function POST(req: NextRequest) {
 
             break;
         }
-
+        
         default:
             console.log(`Unhandled event type ${event.type}`);
     }
-    
+
     return NextResponse.json({ message: "Webhook received" });
 }
