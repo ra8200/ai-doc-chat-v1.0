@@ -7,9 +7,9 @@ const firebaseConfig = {
     authDomain: "ai-doc-chat.firebaseapp.com",
     projectId: "ai-doc-chat",
     storageBucket: "ai-doc-chat.appspot.com",
-    messagingSenderId: "180391762009",
-    appId: "1:180391762009:web:ec09dbd7aaf8643fcd3948",
-    measurementId: "G-ZY28KF0PLM"
+    messagingSenderId: process.env.FIREBASE_MESSAGING_SENDER_ID,
+    appId: process.env.FIREBASE_APP_ID,
+    measurementId: process.env.FIREBASE_MEASUREMENT_ID
 };
 
 const app = getApps().length === 0 ? initializeApp(firebaseConfig) : getApp();

@@ -52,16 +52,14 @@ export default function Home() {
             <h2 className="text-base font-semibold leading-7 text-indigo-600">
               Interactive Document Companion
             </h2>
-
             <p className="mt-2 text-3xl font-bold tracking-tight text-gray-700 sm:text-6xl">
               Transform Your PDFs into Interactive Conversations
             </p>
-
             <p className="mt-6 text-lg leading-8 text-gray-600">
-              Introducting{" "}
-              <span className="text-indigo-600 font-bold">Chat with your Docs.</span>
+              Introducing{" "}
+              <span className="text-indigo-600 font-bold">Chat with your PDFs.</span>
               <br />
-              <br /> Upload your PDF, and our Chat Bot will answer your
+              <br /> Upload your PDFs, and our Chat Bot will answer your
               questions, summarize conent, and answer all your Questions. Ideal for
               everyone, <span className="text-indigo-600">
                 Chat with your PDFs
@@ -71,14 +69,12 @@ export default function Home() {
               enhancing productivity 10x fold effortlessly.
             </p>
           </div>
-
           <Button asChild className="bg-indigo-700 mt-10">
             <Link href='/dashboard'>
               Get Started
             </Link>
           </Button>
         </div>
-
         <div className="relative overflow-hidden pt-16">
           <div className="mx-auto max-w-7xl px-6 lg:px-8 shadow-[4px_-4px_10px_rgba(0,0,0,0.2),_0px_0px_0px_rgba(0,0,0,0.2)]">
             <Image 
@@ -93,7 +89,6 @@ export default function Home() {
               </div>
             </div>
           </div>
-
           <div className="mx-auto mt-16 max-w-7xl px-6 sm:mt-20 md:mt-24 lg:px-8">
             <dl className="mx-auto grid max-w-2xl grid-cols-1 gap-x-6 gap-y-10 text-base leading-7 text-gray-600 sm:grid-cols-2 lg:mx-0 lg:max-w-none lg:grid-cols-3 lg:gap-x-8 lg:gap-y-16">
               {features.map((feature) => (
@@ -104,7 +99,6 @@ export default function Home() {
                       className="absolute left-1 top-1 w-5 h-5 text-indigo-600"
                     />
                   </dt>
-
                   <dd>{feature.description}</dd>
                 </div>
               ))}

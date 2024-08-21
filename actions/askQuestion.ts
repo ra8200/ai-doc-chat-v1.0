@@ -5,9 +5,6 @@ import { auth } from "@clerk/nextjs/server";
 import { generateLangchainCompletion } from "@/lib/langchain"
 import { Message } from "@/components/Chat";
 
-const FREE_LIMIT = 2;
-const PRO_LIMIT = 20;
-
 export async function askQuestion( id: string, question: string) {
     console.log(`askQuestion triggered with id: ${id}, question: ${question}`);
     auth().protect();
