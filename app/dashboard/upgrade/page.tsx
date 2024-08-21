@@ -23,19 +23,16 @@ function PricingPage() {
 
     const handleUpgrade = () => {
         if (!user) return;
-
         const userDetails: UserDetails = {
             email: user.primaryEmailAddress?.toString()!,
             name: user.fullName!,
         };
-
         startTransition(async () => {
             const stripe = await getStripe();
 
             if (hasActiveMembership) {
                 // create Stripe Portal
             }
-
             const sessionId = await createCheckoutSession(userDetails);
 
             await stripe?.redirectToCheckout({
@@ -55,13 +52,11 @@ function PricingPage() {
                         Supercharge your Document Companion
                     </p>
                 </div>
-
                 <p className="mx-auto mt-6 mx-w-2xl px-10 text-center text-lg leading-8 text-gray-600">
                     Choose an afforable plan thats packet with the best features
                     for interacting with your PDFs, enhancing your productivity, and
                     streamlining your workflow.
-                </p>
-                
+                </p>               
                 <div className="max-w-md mx-auto mt-10 grid grid-cols-1 md:grid-cols-2 md:max-w-2xl gap-8 lg:max-w-4xl">
                     {/* Free */}
                     <div className="ring-2 ring-gray-300 p-8 h-fit pb-12 rounded-3xl">
@@ -76,7 +71,6 @@ function PricingPage() {
                                 Free
                             </span>
                         </p>
-
                         <ul
                             role="list"
                             className="mt-8 space-y-e text-sm leading-6 text-gray-600"
@@ -95,7 +89,6 @@ function PricingPage() {
                             </li>
                         </ul>
                     </div>
-            
                     {/* PRO */}        
                     <div className="ring-2 ring-indigo-600 p-8 h-fit pb-12 rounded-3xl">
                         <h3 className="text-lg font-semibold leading-8 text-gray-900">
@@ -112,7 +105,6 @@ function PricingPage() {
                                 /month
                             </span>
                         </p>
-                        
                         <Button 
                             className="bg-indigo-600 w-full text-white shadow-sm hover:bg-indigo-500 mt-6 block rounded-md px-3 py-2 text-center text-sm font-semibold leading-6 focus-visibile:outline focus-visible:outline-2 focus-visibile:outline-offset-2 focus=visible:outline-indigo-600"
                             disabled={loading || isPending}
@@ -126,7 +118,6 @@ function PricingPage() {
                                         : "Upgrade to Pro"
                             }
                         </Button>
-
                         <ul
                             role="list"
                             className="mt-8 space-y-e text-sm leading-6 text-gray-600"
