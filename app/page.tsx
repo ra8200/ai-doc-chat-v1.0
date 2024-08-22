@@ -60,7 +60,7 @@ export default function Home() {
               <span className="text-indigo-600 font-bold">Chat with your PDFs.</span>
               <br />
               <br /> Upload your PDFs, and our Chat Bot will answer your
-              questions, summarize conent, and answer all your Questions. Ideal for
+              questions, summarize content, and answer all your questions. Ideal for
               everyone, <span className="text-indigo-600">
                 Chat with your PDFs
               </span>{" "}
