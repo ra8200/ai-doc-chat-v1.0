@@ -66,7 +66,7 @@ export default function Home() {
               </span>{" "}
               turns static documents into {" "}
               <span className="font-bold">dynamic conversations</span>,
-              enhancing productivity 10x fold effortlessly.
+              enhancing productivity 10x effortlessly.
             </p>
           </div>
           <Button asChild className="bg-indigo-700 mt-10">
