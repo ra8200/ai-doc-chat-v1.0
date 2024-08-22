@@ -1,6 +1,6 @@
 "use server";
 
-import { UserDetails } from "@/app/dashboard/upgrade/page";
+import { UserDetails } from "@/lib/userDetails";
 import { adminDb } from "@/firebase/firebaseAdmin";
 import stripe from "@/lib/stripe";
 import { auth } from "@clerk/nextjs/server";

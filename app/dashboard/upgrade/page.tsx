@@ -1,6 +1,7 @@
 "use client";
 
 import { createCheckoutSession } from "@/actions/createCheckoutSession";
+import { createStripePortal } from "@/actions/createStripePortal";
 import { Button } from "@/components/ui/button";
 import useSubscription from "@/hooks/useSubscription";
 import getStripe from "@/lib/stripe-js";
@@ -8,12 +9,7 @@ import { useUser } from "@clerk/nextjs";
 import { CheckIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useTransition } from "react";
-
-
-export type UserDetails = {
-    email: string;
-    name: string;
-};
+import { UserDetails } from "@/lib/userDetails";
 
 function PricingPage() {
     const { user } = useUser();
@@ -32,6 +28,8 @@ function PricingPage() {
 
             if (hasActiveMembership) {
                 // create Stripe Portal
+                const stripePortalUrl = await createStripePortal();
+                return router.push(stripePortalUrl);
             }
             const sessionId = await createCheckoutSession(userDetails);
 

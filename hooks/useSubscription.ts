@@ -5,10 +5,9 @@ import { useUser } from "@clerk/nextjs";
 import { collection, doc } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import { useCollection, useDocument } from "react-firebase-hooks/firestore";
+import { FREE_LIMIT, PRO_LIMIT } from "@/lib/limits";
 
-// Number of Documents the usser is allowed
-const FREE_LIMIT = 2;
-const PRO_LIMIT = 20; 
+
 
 function useSubscription() {
     const [hasActiveMembership, setHasActiveMembership] = useState(null);
@@ -32,10 +31,10 @@ function useSubscription() {
         if (!snapshot) return;
 
         const data = snapshot.data();
-        
+      
         if (!data) return;
 
-        setHasActiveMembership(data.activeMembership);
+        setHasActiveMembership(data.hasActiveMembership);
     }, [snapshot]);
 
     useEffect(() => {

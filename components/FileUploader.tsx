@@ -9,12 +9,17 @@ import {
     RocketIcon,
     SaveIcon,
 } from "lucide-react"
-import useUpload, { Status, StatusText } from "@/hooks/useUpload";
+import useUpload, { StatusText } from "@/hooks/useUpload";
 import { useRouter } from "next/navigation";
+import useSubscription from "@/hooks/useSubscription";
+import { useToast } from "./ui/use-toast";
+
 
 function FileUploader() {
     const { progress, status, fileId, handleUpload } = useUpload();
+    const { isOverFileLimit, filesLoading } = useSubscription();
     const router = useRouter();
+    const { toast } = useToast();
 
     useEffect(() => {
         if (fileId) {
@@ -28,12 +33,21 @@ function FileUploader() {
         
             const file = acceptedFiles[0]
             if (file) {
-                await handleUpload(file)
+                if (!isOverFileLimit && !filesLoading) {
+                    await handleUpload(file)
+                } else {
+                    toast({
+                        variant: "destructive",
+                        title: "Free Tier Limit Reached",
+                        description: "You have reached the maximum number of files allowed on your account. Please upgrade to add more documents.",
+                    })
+                }
+                
             } else {
                 // do nothing...
                 // toast...
             }
-    }, [handleUpload])
+    }, [handleUpload, isOverFileLimit, filesLoading, toast]);
 
     const statusIcons= {
         [StatusText.UPLOADING]: (
@@ -93,7 +107,7 @@ function FileUploader() {
                 >
                     <input {...getInputProps()} />
 
-                    <div className="flex flex-col item-center justify-center">
+                    <div className="flex flex-col items-center justify-center">
                         {isDragActive ? (
                             <>
                                 <RocketIcon className="w-20 h-20 animate-ping" />

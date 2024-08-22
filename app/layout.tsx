@@ -1,7 +1,8 @@
 import "@/styles/globals.css";
 import type { Metadata } from "next";
 import { Inter as FontSans } from "next/font/google";
-import { ClerkProvider, SignedIn, SignedOut, SignInButton, UserButton } from "@clerk/nextjs";
+import { ClerkProvider } from "@clerk/nextjs";
+import { Toaster } from "@/components/ui/toaster";
 
 import { cn } from "@/lib/utils"
  
@@ -27,6 +28,7 @@ export default function RootLayout({
           "min-h-screen h-screen overflow-hidden flex flex-col",
           fontSans.variable
         )}>
+          <Toaster />
           {children}
         </body>
       </html>

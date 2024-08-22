@@ -3,21 +3,16 @@
 import { FormEvent, useEffect, useRef, useState, useTransition } from "react";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
+import { useToast } from "./ui/use-toast";
 import { Loader2Icon } from "lucide-react";
-import { useCollection } from "react-firebase-hooks/firestore";
 import { useUser } from "@clerk/nextjs"; 
+import { useCollection } from "react-firebase-hooks/firestore";
 import { collection, orderBy, query } from "firebase/firestore";
 import { db } from "@/firebase/firebase"
 import { askQuestion } from "@/actions/askQuestion";
 import ChatMessage from "./ChatMessage";
-import { useToast } from "./ui/use-toast";
 
-export type Message = {
-    id?: string;
-    role: "human" | "ai" | "placeholder";
-    message: string;
-    createdAt: Date;
-}
+import { Message } from "@/lib/humanMessage";
 
 function Chat({ id }: { id: string }) {
     const { user } = useUser();
@@ -45,6 +40,7 @@ function Chat({ id }: { id: string }) {
 
         // get seocnd to last message to check if the AI is thinking
         const lastMessage = messages.pop();
+        
         if (lastMessage?.role === "ai" && lastMessage.message === "Thinking...") {
             // return as this is a dummy placeholder message
             return
@@ -61,9 +57,11 @@ function Chat({ id }: { id: string }) {
             };
         })
 
-        setMessages(newMessages);
+        if (JSON.stringify(messages) !== JSON.stringify(newMessages)) {
+            setMessages(newMessages);
+        }
         // Ignore messages dependency warning here
-    }, [snapshot, messages]);
+    }, [snapshot]);
 
     const handleSubmit = async (e: FormEvent) => {
         e.preventDefault();
