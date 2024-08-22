@@ -60,8 +60,8 @@ function Chat({ id }: { id: string }) {
         if (JSON.stringify(messages) !== JSON.stringify(newMessages)) {
             setMessages(newMessages);
         }
-        // Ignore messages dependency warning here
-    }, [snapshot]);
+    
+    }, [snapshot]); // Ignore messages dependency warning, intentionally not including messages, it will cause a loop if added
 
     const handleSubmit = async (e: FormEvent) => {
         e.preventDefault();
