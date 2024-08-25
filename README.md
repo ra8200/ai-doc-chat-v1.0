@@ -2,12 +2,6 @@
 # AI Doc Chat
 ![alt text](public/ReadMe.png)
 =======
-# AI Doc Chat!
-
-[ReadMe](https://github.com/user-attachments/assets/b701939b-c663-41be-ac88-ed6ef085823a)
->>>>>>> 262fa5e0bd034343bb66de8f5804441590ba5671
-
-
 **AI Doc Chat** is an interactive document companion that allows users to upload PDF files and interact with them through a chatbot interface. The application leverages Firebase, Pinecone, and LangChain to provide fast, accurate, and context-aware responses based on the content of the uploaded documents.
 
 ## Features
