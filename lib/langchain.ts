@@ -7,9 +7,8 @@ import { ChatPromptTemplate } from "@langchain/core/prompts";
 import { createRetrievalChain } from "langchain/chains/retrieval";
 import { createHistoryAwareRetriever } from "langchain/chains/history_aware_retriever";
 import { HumanMessage, AIMessage } from "@langchain/core/messages";
-import pineconeClient from "./pinecone";
 import { PineconeStore } from "@langchain/pinecone";
-import { PineconeConflictError } from "@pinecone-database/pinecone/dist/errors";
+import pineconeClient from "./pinecone";
 import { Index, RecordMetadata } from "@pinecone-database/pinecone";
 import { adminDb } from "@/firebase/firebaseAdmin";
 import { auth } from "@clerk/nextjs/server"
@@ -29,8 +28,7 @@ async function fetchMessagesFromDB(docId: string) {
     }
 
     console.log("--- Fetching chat history from the firestore database... ---");
-    // Get the last 10 messages from the chat history
-    // const LIMIT = 10;
+
     const chats = await adminDb
         .collection("users")
         .doc(userId)
@@ -38,7 +36,6 @@ async function fetchMessagesFromDB(docId: string) {
         .doc(docId)
         .collection("chat")
         .orderBy("createdAt", "desc")
-        // .limit(LIMIT)
         .get();
 
     const chatHistory = chats.docs.map((doc) =>
@@ -131,7 +128,7 @@ export async function generateEmbeddingsInPineconeVectorStore(docId: string) {
 
         return pineconeVectorStore;
     } else {
-        // If the namespace does not exist, downloadthe file from firestore via the stored Download URL & generate the embeddings and store them in the Pinecone Vectore store
+        // If the namespace does not exist, download the file from firestore via the stored Download URL & generate the embeddings and store them in the Pinecone Vectore store
         const splitDocs = await generateDocs(docId);
 
         console.log(`--- Starting the embeddings in namesspace ${docId} in the ${indexName} Pinecone vector store... ---`);
@@ -192,7 +189,7 @@ const generateLangchainCompletion = async (docId: string, question: string) => {
             "Answer the user's question based on the below context:\n\n{context}",
         ],
 
-        ...chatHistory, // Insert the actual chat history here
+        ...chatHistory,
 
         ["user", "{input}"],
     ]);
@@ -221,5 +218,4 @@ const generateLangchainCompletion = async (docId: string, question: string) => {
     return reply.answer;
 };
 
-// Export the model and the run function
 export { model, generateLangchainCompletion };

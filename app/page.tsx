@@ -60,11 +60,11 @@ export default function Home() {
               <span className="text-indigo-600 font-bold">Chat with your PDFs.</span>
               <br />
               <br /> Upload your PDFs, and our Chat Bot will answer your
-              questions, summarize content, and answer all your questions. Ideal for
-              everyone, <span className="text-indigo-600">
+              questions, summarize content, and offer insights.
+              Perfect for everyone! <span className="text-indigo-600">
                 Chat with your PDFs
               </span>{" "}
-              turns static documents into {" "}
+              Turns static documents into {" "}
               <span className="font-bold">dynamic conversations</span>,
               enhancing productivity 10x effortlessly.
             </p>
